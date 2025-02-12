@@ -1,11 +1,14 @@
 "use client";
 
 import { HiPaperAirplane, HiPhoto } from "react-icons/hi2";
-import MessageInput from "./MessageInput";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import axios from "axios";
 import { CldUploadButton } from "next-cloudinary";
+
+import MessageInput from "./MessageInput";
+
 import useConversation from "@/app/hooks/useConversation";
+
+import axiosInstance from "@/app/libs/axios";
 
 const Form = () => {
   const { conversationId } = useConversation();
@@ -14,25 +17,25 @@ const Form = () => {
     register,
     handleSubmit,
     setValue,
-    formState: { errors },
+    formState: { errors }
   } = useForm<FieldValues>({
     defaultValues: {
-      message: "",
-    },
+      message: ""
+    }
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setValue("message", "", { shouldValidate: true });
-    axios.post("/api/messages", {
+    axiosInstance.post("/api/messages", {
       ...data,
-      conversationId: conversationId,
+      conversationId: conversationId
     });
   };
 
   const handleUpload = (result: any) => {
-    axios.post("/api/messages", {
+    axiosInstance.post("/api/messages", {
       image: result.info.secure_url,
-      conversationId: conversationId,
+      conversationId: conversationId
     });
   };
 

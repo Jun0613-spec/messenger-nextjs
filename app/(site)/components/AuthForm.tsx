@@ -1,16 +1,18 @@
 "use client";
 
-import axios from "axios";
+import { toast } from "react-hot-toast";
 import { signIn, useSession } from "next-auth/react";
 import React, { useCallback, useEffect, useState } from "react";
 import { BsGithub, BsGoogle } from "react-icons/bs";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
 import { useRouter } from "next/navigation";
 
-import Input from "@/app/components/inputs/Input";
 import AuthSocialButton from "./AuthSocialButton";
+
+import Input from "@/app/components/inputs/Input";
 import Button from "@/app/components/Button";
-import { toast } from "react-hot-toast";
+
+import axiosInstance from "@/app/libs/axios";
 
 type Variant = "LOGIN" | "REGISTER";
 
@@ -37,25 +39,25 @@ const AuthForm = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors },
+    formState: { errors }
   } = useForm<FieldValues>({
     defaultValues: {
       name: "",
       email: "",
-      password: "",
-    },
+      password: ""
+    }
   });
 
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
     if (variant === "REGISTER") {
-      axios
+      axiosInstance
         .post("/api/register", data)
         .then(() =>
           signIn("credentials", {
             ...data,
-            redirect: false,
+            redirect: false
           })
         )
         .then((callback) => {
@@ -74,7 +76,7 @@ const AuthForm = () => {
     if (variant === "LOGIN") {
       signIn("credentials", {
         ...data,
-        redirect: false,
+        redirect: false
       })
         .then((callback) => {
           if (callback?.error) {
@@ -107,16 +109,7 @@ const AuthForm = () => {
 
   return (
     <div className="mt-8 sm:mx-auto sm:w-full sm:max-w-md">
-      <div
-        className="
-        bg-white
-          px-4
-          py-8
-          shadow
-          sm:rounded-lg
-          sm:px-10
-        "
-      >
+      <div className=" bg-white  px-4   py-8 shadow sm:rounded-lg sm:px-10">
         <form className="space-y-6" onSubmit={handleSubmit(onSubmit)}>
           {variant === "REGISTER" && (
             <Input
@@ -155,14 +148,7 @@ const AuthForm = () => {
 
         <div className="mt-6">
           <div className="relative">
-            <div
-              className="
-                absolute 
-                inset-0 
-                flex 
-                items-center
-              "
-            >
+            <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center text-sm">
@@ -183,17 +169,7 @@ const AuthForm = () => {
             />
           </div>
         </div>
-        <div
-          className="
-            flex 
-            gap-2 
-            justify-center 
-            text-sm 
-            mt-6 
-            px-2 
-            text-gray-500
-          "
-        >
+        <div className=" flex gap-2 justify-center text-sm mt-6 px-2 text-gray-500">
           <div>
             {variant === "LOGIN"
               ? "New to Messenger?"

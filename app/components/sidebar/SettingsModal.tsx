@@ -1,17 +1,19 @@
 "use client";
 
-import axios from "axios";
+import Image from "next/image";
+import { toast } from "react-hot-toast";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
-import { User } from "@prisma/client";
 import { CldUploadButton } from "next-cloudinary";
+import { User } from "@prisma/client";
 
 import Input from "../inputs/Input";
 import Modal from "../modals/Modal";
 import Button from "../Button";
-import Image from "next/image";
-import { toast } from "react-hot-toast";
+
+import axiosInstance from "@/app/libs/axios";
+
 
 interface SettingsModalProps {
   isOpen?: boolean;
@@ -37,8 +39,8 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
     formState: { errors },
   } = useForm<FieldValues>({
     defaultValues: {
-      name: currentUser?.name,
-      image: currentUser?.image,
+      name: currentUser?.name ,
+      image: currentUser?.image ,
     },
   });
 
@@ -53,7 +55,7 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
   const onSubmit: SubmitHandler<FieldValues> = (data) => {
     setIsLoading(true);
 
-    axios
+    axiosInstance
       .post("/api/settings", data)
       .then(() => {
         router.refresh();
