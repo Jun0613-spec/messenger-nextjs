@@ -9,11 +9,11 @@ const font = Figtree({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Messenger",
-  description: "Messenger App",
+  description: "Messenger App"
 };
 
 export default function RootLayout({
-  children,
+  children
 }: {
   children: React.ReactNode;
 }) {

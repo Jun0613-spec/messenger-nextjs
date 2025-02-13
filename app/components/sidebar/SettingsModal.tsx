@@ -14,7 +14,6 @@ import Button from "../Button";
 
 import axiosInstance from "@/app/libs/axios";
 
-
 interface SettingsModalProps {
   isOpen?: boolean;
   onClose: () => void;
@@ -24,31 +23,29 @@ interface SettingsModalProps {
 const SettingsModal: React.FC<SettingsModalProps> = ({
   isOpen,
   onClose,
-  currentUser = {},
+  currentUser = {}
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
-
-  console.log(currentUser, "&TEST_CURRENT_USER");
 
   const {
     register,
     handleSubmit,
     setValue,
     watch,
-    formState: { errors },
+    formState: { errors }
   } = useForm<FieldValues>({
     defaultValues: {
-      name: currentUser?.name ,
-      image: currentUser?.image ,
-    },
+      name: currentUser?.name,
+      image: currentUser?.image
+    }
   });
 
   const image = watch("image");
 
   const handleUpload = (result: any) => {
     setValue("image", result.info.secure_url, {
-      shouldValidate: true,
+      shouldValidate: true
     });
   };
 

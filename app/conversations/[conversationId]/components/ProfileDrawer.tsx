@@ -24,7 +24,7 @@ interface ProfileDrawerProps {
 const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   isOpen,
   onClose,
-  data,
+  data
 }) => {
   const [confirmOpen, setConfirmOpen] = useState(false);
   const otherUser = useOtherUser(data);
@@ -38,6 +38,7 @@ const ProfileDrawer: React.FC<ProfileDrawerProps> = ({
   }, [data.name, otherUser.name]);
 
   const { members } = useActiveList();
+
   const isActive = members.indexOf(otherUser?.email!) !== -1;
 
   const statusText = useMemo(() => {
