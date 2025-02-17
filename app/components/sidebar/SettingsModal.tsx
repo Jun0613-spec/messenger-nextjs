@@ -17,13 +17,13 @@ import axiosInstance from "@/app/libs/axios";
 interface SettingsModalProps {
   isOpen?: boolean;
   onClose: () => void;
-  currentUser: User;
+  currentUser?: User;
 }
 
 const SettingsModal: React.FC<SettingsModalProps> = ({
   isOpen,
   onClose,
-  currentUser = {}
+  currentUser
 }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -93,21 +93,15 @@ const SettingsModal: React.FC<SettingsModalProps> = ({
               <div>
                 <label
                   htmlFor="photo"
-                  className="
-                    block 
-                    text-sm 
-                    font-medium 
-                    leading-6 
-                    text-gray-900
-                  "
+                  className="block  text-sm  font-medium    leading-6 text-gray-900"
                 >
                   Photo
                 </label>
                 <div className="mt-2 flex items-center gap-x-3">
                   <Image
-                    width="48"
-                    height="48"
-                    className="rounded-full"
+                    width="56"
+                    height="56"
+                    className="rounded-full w-14 h-14 object-cover"
                     src={
                       image || currentUser?.image || "/images/placeholder.jpg"
                     }
